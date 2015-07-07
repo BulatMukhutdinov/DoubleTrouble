@@ -1,12 +1,22 @@
+/**
+ * Created by Bulat Mukhutdinov on 07.07.2015.
+ */
+
 import java.sql.*;
 
 public class PostgreConnection implements Recordable {
-    private final String URL = "PostgresDB";
-    private final String USER = "postgres";
-    private final String PASS = "Bulat6666";
+    private final String URL;
+    private final String USER;
+    private final String PASS;
+
+    public PostgreConnection(String url, String user, String pass) {
+        this.URL = url;
+        this.USER = user;
+        this.PASS = pass;
+    }
 
     @Override
-        public boolean setRecord(String record) {
+    public boolean setRecord(String record) {
         if (record == null || record.length() == 0) {
             System.out.println("Incorrect record!");
             return false;
@@ -34,5 +44,15 @@ public class PostgreConnection implements Recordable {
             e.printStackTrace();
             return false;
         }
+    }
+
+    @Override
+    public String getRecord(String searchWord) {
+        return null;
+    }
+
+    @Override
+    public String getRecord(int id) {
+        return null;
     }
 }
