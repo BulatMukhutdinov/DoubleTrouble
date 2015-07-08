@@ -38,9 +38,4 @@ public class Server {
         databases = new ArrayList<Recordable>();
         databases.add(new PostgreConnection("PostgresDB", "postgres", "Bulat6666"));
     }
-
-    //TODO подумать над решением отката транзакций
-    private static void rollback(String transactionID) {
-
-    }
 }

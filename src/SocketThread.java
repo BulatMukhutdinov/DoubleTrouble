@@ -1,10 +1,11 @@
+/**
+ * Created by Bulat on 07.07.2015.
+ */
+
 import java.io.*;
 import java.net.*;
 import java.util.List;
 
-/**
- * Created by Bulat on 07.07.2015.
- */
 public class SocketThread extends Thread {
     protected Socket socket;
     private List<Recordable> databases;
@@ -42,10 +43,15 @@ public class SocketThread extends Thread {
                 System.out.println("Waiting for the next record...");
             }
         } catch (SocketException x) {
-            System.out.println("Client "+ getName() +" closed");
+            System.out.println("Client " + getName() + " closed");
             System.out.println();
         } catch (Exception x) {
             x.printStackTrace();
         }
+    }
+
+    //TODO подумать над решением отката транзакций
+    private static void rollback(String transactionID) {
+
     }
 }
