@@ -8,15 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Server {
-    private final static int PORT = 6666; // случайный порт (может быть любое число от 1025 до 65535)
-    private static List<Recordable> databases;
-
-    public static void main(String[] args) {
-        initDatabases();
+    public void start(int port, List<Recordable> databases) {
         ServerSocket serverSocket = null;
         Socket socket = null;
         try {
-            serverSocket = new ServerSocket(PORT); // создаем сокет сервера и привязываем его к вышеуказанному порту
+            serverSocket = new ServerSocket(port); // создаем сокет сервера и привязываем его к вышеуказанному порту (может быть любое число от 1025 до 65535)
         } catch (IOException e) {
             e.printStackTrace();
 
@@ -31,11 +27,5 @@ public class Server {
             // new thread for a client
             new SocketThread(socket, databases).start();
         }
-
-    }
-
-    private static void initDatabases() {
-        databases = new ArrayList<Recordable>();
-        databases.add(new PostgreConnection("PostgresDB", "postgres", "Bulat6666"));
     }
 }

@@ -6,11 +6,9 @@ import java.net.*;
 import java.io.*;
 
 public class Client {
-    public static void main(String[] args) {
-        int serverPort = 6666; // здесь обязательно нужно указать порт к которому привязывается сервер.
+    public void start(int serverPort) {
         String address = "127.0.0.1"; // это IP-адрес компьютера, где исполняется наша серверная программа.
         // Здесь указан адрес того самого компьютера где будет исполняться и клиент.
-
         try {
             InetAddress ipAddress = InetAddress.getByName(address); // создаем объект который отображает вышеописанный IP-адрес.
             System.out.println("Any of you heard of a socket with IP address " + address + " and port " + serverPort + "?");
@@ -33,16 +31,16 @@ public class Client {
 
             while (true) {
                 line = keyboard.readLine(); // ждем пока пользователь введет что-то и нажмет кнопку Enter.
-                if (line == null){
+                if (line == null) {
                     continue;
                 }
                 System.out.println("Sending this line to the server...");
                 out.writeUTF(line); // отсылаем введенную строку текста серверу.
                 out.flush(); // заставляем поток закончить передачу данных.
                 boolean isTransactionSucceed = in.readBoolean(); // ждем пока сервер отошлет ответ.
-                if (isTransactionSucceed){
+                if (isTransactionSucceed) {
                     System.out.println("Success!");
-                }else{
+                } else {
                     System.out.println("Failed");
                 }
                 System.out.println();
