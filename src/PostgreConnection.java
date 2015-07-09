@@ -1,7 +1,7 @@
 /**
  * Created by Bulat Mukhutdinov on 07.07.2015.
  */
-// check that git works from Kolya
+
 import java.sql.*;
 
 public class PostgreConnection implements Recordable {
