@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="RedshiftJDBC4-1.1.6.1006">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/jars/RedshiftJDBC4-1.1.6.1006.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

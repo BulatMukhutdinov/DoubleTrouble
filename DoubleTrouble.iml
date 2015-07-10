@@ -7,8 +7,16 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="postgresql-9.3-1103.jdbc3" level="project" />
-    <orderEntry type="library" name="AWS-plugin" level="project" />
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/jars/RedshiftJDBC4-1.1.6.1006.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="library" exported="" name="RedshiftJDBC4-1.1.6.1006" level="project" />
   </component>
 </module>
 

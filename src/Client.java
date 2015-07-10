@@ -6,7 +6,10 @@ import java.net.*;
 import java.io.*;
 
 public class Client {
-    public void start(int serverPort) {
+    public static void main(String args[]){
+        start(6666);
+    }
+    public static void start(int serverPort) {
         String address = "127.0.0.1"; // это IP-адрес компьютера, где исполняется наша серверная программа.
         // Здесь указан адрес того самого компьютера где будет исполняться и клиент.
         try {

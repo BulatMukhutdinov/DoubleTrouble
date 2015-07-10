@@ -23,7 +23,7 @@ public class PostgreConnection implements Recordable {
     private void initConnection() {
         try {
             connection = DriverManager.getConnection(
-                    "jdbc:postgresql://127.0.0.1:5432/" + URL, USER,
+                    "jdbc:redshift://doubletrouble.ctueqkiqocnw.us-west-2.rds.amazonaws.com:5432/" + URL, USER,
                     PASS);
             isConnectionSuccessful = true;
         } catch (SQLException e) {
@@ -39,7 +39,7 @@ public class PostgreConnection implements Recordable {
             System.out.println("Incorrect record!");
             return false;
         }
-        if (testConnection()) {
+        if (!testConnection()) {
             return false;
         }
         Statement statement = null;
@@ -92,7 +92,7 @@ public class PostgreConnection implements Recordable {
 
     private boolean testConnection() {
         try {
-            Class.forName("org.postgresql.Driver");
+            Class.forName("com.amazon.redshift.jdbc4.Driver");
         } catch (ClassNotFoundException e) {
             System.out.println("Where is your PostgreSQL JDBC Driver? Include in your library path!");
             e.printStackTrace();
