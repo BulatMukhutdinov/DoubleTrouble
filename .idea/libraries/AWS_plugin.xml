@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="AWS-plugin">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/jars/AWS-plugin/lib/AWS-plugin.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
