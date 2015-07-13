@@ -1,0 +1,121 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.*;
+import java.net.InetAddress;
+import java.net.Socket;
+import java.net.SocketException;
+import java.util.*;
+
+/**
+ * Created by galieva on 13.07.2015.
+ */
+public class DesktopClient {
+    private JFrame mainFrame;
+    private JLabel headerLabel;
+    private JLabel statusLabel;
+    private JPanel controlPanel;
+    private Client client;
+    public DesktopClient(){
+        prepareGUI();
+        //connectServer();
+    }
+
+    private void prepareGUI(){
+        mainFrame = new JFrame("Double Trouble");
+        mainFrame.setSize(300, 200);
+        mainFrame.setLayout(new GridLayout(3, 1));
+        mainFrame.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent windowEvent) {
+                System.exit(0);
+            }
+        });
+        headerLabel = new JLabel("", JLabel.CENTER);
+        statusLabel = new JLabel("",JLabel.CENTER);
+        client=new Client();
+
+        statusLabel.setSize(350,100);
+
+        controlPanel = new JPanel();
+        controlPanel.setLayout(new FlowLayout());
+
+        mainFrame.add(headerLabel);
+        mainFrame.add(controlPanel);
+        mainFrame.add(statusLabel);
+        mainFrame.setVisible(true);
+    }
+
+    private void showTextField(DataOutputStream out, DataInputStream in){
+        headerLabel.setText("Enter your text here");
+
+        final JTextField userText = new JTextField(15);
+        JButton sendButton = new JButton("Send");
+        sendButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String data = "User entered: " + userText.getText();
+                statusLabel.setText(data);
+                    System.out.println("Sending this line to the server...");
+                    try
+                    {
+                        out.writeUTF(userText.getText()); // отсылаем введенную строку текста серверу.
+                    out.flush(); // заставл€ем поток закончить передачу данных.
+                    boolean isTransactionSucceed = in.readBoolean(); // ждем пока сервер отошлет ответ.
+                    if (isTransactionSucceed) {
+                        statusLabel.setText("Success!");
+                    } else {
+                        statusLabel.setText("Failed");
+                    }
+                    System.out.println();
+                }
+                    catch (SocketException x) {
+                        System.out.println("Server doesn't response anymore");
+                        System.out.println();
+                    } catch (Exception x) {
+                        x.printStackTrace();
+                    }
+            }
+        });
+        controlPanel.add(userText);
+        controlPanel.add(sendButton);
+        mainFrame.setVisible(true);
+    }
+
+    public static void main(String args[]) {
+        DesktopClient desktopClient = new DesktopClient();
+
+        String address = "127.0.0.1"; // это IP-адрес компьютера, где исполн€етс€ наша серверна€ программа.
+        // «десь указан адрес того самого компьютера где будет исполн€тьс€ и клиент.
+        try {
+            InetAddress ipAddress = InetAddress.getByName(address); // создаем объект который отображает вышеописанный IP-адрес.
+            System.out.println("Any of you heard of a socket with IP address " + address + " and port " + 6666 + "?");
+            Socket socket = new Socket(ipAddress, 6666); // создаем сокет использу€ IP-адрес и порт сервера.
+            System.out.println("Yes! I just got hold of the program.");
+
+            // Ѕерем входной и выходной потоки сокета, теперь можем получать и отсылать данные клиентом.
+            InputStream sin = socket.getInputStream();
+            OutputStream sout = socket.getOutputStream();
+
+            //  онвертируем потоки в другой тип, чтоб легче обрабатывать текстовые сообщени€.
+            DataInputStream in = new DataInputStream(sin);
+            DataOutputStream out = new DataOutputStream(sout);
+
+            // —оздаем поток дл€ чтени€ с клавиатуры.
+            //BufferedReader keyboard = new BufferedReader(new InputStreamReader(System.in));
+            //String line = null;
+            desktopClient.showTextField(out,in);
+            System.out.println("Type in something and press enter. Will send it to the server and tell ya what it thinks.");
+            System.out.println();
+        } catch (SocketException x) {
+            System.out.println("Server doesn't response anymore");
+            System.out.println();
+        } catch (Exception x) {
+            x.printStackTrace();
+        }
+        //TODO —ервер нужен только web решени€.  онсольное приложение пишет сразу в базу.
+    }
+
+}
+
