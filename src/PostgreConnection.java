@@ -6,6 +6,9 @@ import java.sql.*;
 import java.util.*;
 
 public class PostgreConnection implements Recordable {
+    public final String HOST = "jdbc:redshift://dt.ctueqkiqocnw.us-west-2.rds.amazonaws.com";
+    public final String PORT = "5432";
+
     private final String URL;
     private final String USER;
     private final String PASS;
@@ -23,7 +26,7 @@ public class PostgreConnection implements Recordable {
     private void initConnection() {
         try {
             connection = DriverManager.getConnection(
-                    "jdbc:redshift://doubletrouble.ctueqkiqocnw.us-west-2.rds.amazonaws.com:5432/" + URL, USER,
+                    HOST + ":" + PORT + "/" + URL, USER,
                     PASS);
             isConnectionSuccessful = true;
         } catch (SQLException e) {

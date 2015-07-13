@@ -18,7 +18,7 @@ public class App {
 
     private void initDatabases() {
         databases = new ArrayList<Recordable>();
-        databases.add(new PostgreConnection("DoubleTrouble", "DT", "DoubleTrouble"));
+        databases.add(new PostgreConnection("DT", "DT", "DoubleTrouble"));
         //TODO сюда добавить реализацию NoSQL базы
 
 
