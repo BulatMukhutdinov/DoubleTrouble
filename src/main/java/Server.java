@@ -1,10 +1,6 @@
-/**
- * Created by Bulat Mukhutdinov on 07.07.2015.
- */
-
 import java.net.*;
 import java.io.*;
-import java.util.ArrayList;
+import java.sql.SQLException;
 import java.util.List;
 
 public class Server {

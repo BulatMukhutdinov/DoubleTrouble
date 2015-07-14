@@ -1,8 +1,5 @@
 import java.util.List;
 
-/**
- * Created by Bulat Mukhutdinov on 07.07.2015.
- */
 public interface Recordable {
 
     public boolean setRecord(String record);

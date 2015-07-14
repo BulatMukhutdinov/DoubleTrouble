@@ -1,7 +1,3 @@
-/**
- * Created by Bulat Mukhutdinov on 07.07.2015.
- */
-
 import java.sql.*;
 import java.util.*;
 
