@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="MongoConfiguration">
+    <option name="serverConfigurations">
+      <list>
+        <ServerConfiguration>
+          <option name="connectOnIdeStartup" value="true" />
+          <option name="label" value="DT" />
+          <option name="password" value="DoubleTrouble" />
+          <option name="serverUrls">
+            <list>
+              <option value="ds055842.mongolab.com:55842" />
+            </list>
+          </option>
+          <option name="shellWorkingDir" value="C:\Users\Aleksandr\OneDrive\Projects\Summer School\project\mongo" />
+          <option name="userDatabase" value="doubletrouble" />
+          <option name="username" value="DT" />
+        </ServerConfiguration>
+      </list>
+    </option>
+  </component>
+</project>

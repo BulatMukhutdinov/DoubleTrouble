@@ -1,3 +1,4 @@
+import java.net.UnknownHostException;
 import java.util.*;
 
 public class App {
@@ -15,6 +16,14 @@ public class App {
     private void initDatabases() {
         databases = new ArrayList<Recordable>();
         databases.add(new PostgreConnection("DT", "DT", "DoubleTrouble"));
+        try {
+            databases.add(new MongoConnection("DT", "DoubleTrouble"));
+            System.out.println("NoSQL MongoDB Connector IS WORKING!");
+        }
+        catch (UnknownHostException e) {
+            e.printStackTrace();
+            System.out.println("NoSQL MongoDB Connector IS NOT WORKING!");
+        }
         //TODO сюда добавить реализацию NoSQL базы
 
 

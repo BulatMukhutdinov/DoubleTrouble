@@ -32,7 +32,7 @@ public class PostgreConnection implements Recordable {
         }
     }
 
-    @Override
+    //@Override
     public boolean setRecord(String record) {
         if (record == null || record.length() == 0) {
             System.out.println("Incorrect record!");
@@ -53,7 +53,7 @@ public class PostgreConnection implements Recordable {
         return true;
     }
 
-    @Override
+    //@Override
     public List<String> searchRecords(String searchWord) {
      /*   if (testConnection()) {
           //  throw new DBException();
@@ -71,7 +71,7 @@ public class PostgreConnection implements Recordable {
         return new ArrayList<String>();
     }
 
-    @Override
+    //@Override
     public String getRecord(int id) throws DBException {
         if (!testConnection()) {
             throw new DBException();
@@ -100,7 +100,7 @@ public class PostgreConnection implements Recordable {
         return true;
     }
 
-    @Override
+    //@Override
     public boolean isConnectionSuccessful() {
         return isConnectionSuccessful;
     }
