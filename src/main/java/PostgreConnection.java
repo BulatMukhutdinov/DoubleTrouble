@@ -38,9 +38,6 @@ public class PostgreConnection implements Recordable {
             System.out.println("Incorrect record!");
             return false;
         }
-        if (!testConnection()) {
-            return false;
-        }
         Statement statement = null;
         try {
             statement = connection.createStatement();
@@ -72,11 +69,8 @@ public class PostgreConnection implements Recordable {
     }
 
     @Override
-    public String getRecord(int id) throws DBException {
-        if (!testConnection()) {
-            throw new DBException();
-        }
-        Statement statement = null;
+    public String getRecord(int id) {
+        Statement statement;
         try {
             statement = connection.createStatement();
             String sql = "select record from records where id=" + id;
@@ -85,19 +79,26 @@ public class PostgreConnection implements Recordable {
             return resultSet.getString("record");
         } catch (SQLException e) {
             e.printStackTrace();
+            return null;
         }
-        return "";
     }
 
-    private boolean testConnection() {
+    @Override
+    public List<String> getRecords() {
+        Statement statement;
         try {
-            Class.forName("com.amazon.redshift.jdbc4.Driver");
-        } catch (ClassNotFoundException e) {
-            System.out.println("Where is your PostgreSQL JDBC Driver? Include in your library path!");
+            statement = connection.createStatement();
+            String sql = "select record from records";
+            ResultSet resultSet = statement.executeQuery(sql);
+            List<String> records = new ArrayList<String>();
+            while (resultSet.next()) {
+                records.add(resultSet.getString("record"));
+            }
+            return records;
+        } catch (SQLException e) {
             e.printStackTrace();
-            return false;
+            return null;
         }
-        return true;
     }
 
     @Override

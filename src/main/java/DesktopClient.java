@@ -14,8 +14,8 @@ public class DesktopClient {
     private JLabel headerLabel;
     private JLabel statusLabel;
     private JPanel controlPanel;
-    private final static int PORT=6666;
-    private final static String address="127.0.0.1";
+    private final static int PORT = 6666;
+    private final static String address = "127.0.0.1";
 
     public DesktopClient() {
         prepareGUI();

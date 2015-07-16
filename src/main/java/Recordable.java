@@ -6,7 +6,9 @@ public interface Recordable {
 
     public List<String> searchRecords(String searchWord);
 
-    public String getRecord(int id) throws DBException;
+    public String getRecord(int id);
+
+    public List<String> getRecords();
 
     public boolean isConnectionSuccessful();
 }
