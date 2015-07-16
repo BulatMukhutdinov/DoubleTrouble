@@ -51,21 +51,22 @@ public class PostgreConnection implements Recordable {
     }
 
     @Override
-    public List<String> searchRecords(String searchWord) {
-     /*   if (testConnection()) {
-          //  throw new DBException();
-        }
+    public Map<String, String> searchRecords(String searchWord) {
+
         Statement statement = null;
         try {
             statement = connection.createStatement();
-            String sql = "select record from records where id=" + id;
+            String sql = "select * from records where record like \'%" + searchWord + "%\'";
             ResultSet resultSet = statement.executeQuery(sql);
-            resultSet.next();
-            return resultSet.getString("record");
+            Map<String, String> records = new HashMap<String, String>();
+            while (resultSet.next()) {
+                records.put(resultSet.getString("id"), resultSet.getString("record"));
+            }
+            return records;
         } catch (SQLException e) {
             e.printStackTrace();
-        }*/
-        return new ArrayList<String>();
+            return null;
+        }
     }
 
     @Override
@@ -84,20 +85,34 @@ public class PostgreConnection implements Recordable {
     }
 
     @Override
-    public List<String> getRecords() {
+    public Map<String, String> getRecords() {
         Statement statement;
         try {
             statement = connection.createStatement();
-            String sql = "select record from records";
+            String sql = "select * from records";
             ResultSet resultSet = statement.executeQuery(sql);
-            List<String> records = new ArrayList<String>();
+            Map<String, String> records = new HashMap<String, String>();
             while (resultSet.next()) {
-                records.add(resultSet.getString("record"));
+                records.put(resultSet.getString("id"), resultSet.getString("record"));
             }
             return records;
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+    @Override
+    public boolean deleteRecord(int id) {
+        Statement statement;
+        try {
+            statement = connection.createStatement();
+            String sql = "delete from records where id = " + id;
+            statement.executeUpdate(sql);
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
         }
     }
 

@@ -1,14 +1,17 @@
 import java.util.List;
+import java.util.Map;
 
 public interface Recordable {
 
     public boolean setRecord(String record);
 
-    public List<String> searchRecords(String searchWord);
+    public Map<String, String> searchRecords(String searchWord);
 
     public String getRecord(int id);
 
-    public List<String> getRecords();
+    public Map<String, String> getRecords();
+
+    public boolean deleteRecord(int id);
 
     public boolean isConnectionSuccessful();
 }

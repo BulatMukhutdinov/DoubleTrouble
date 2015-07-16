@@ -8,6 +8,7 @@ import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.SocketException;
+import java.util.*;
 
 public class DesktopClient {
     private JFrame mainFrame;
@@ -91,10 +92,11 @@ public class DesktopClient {
             OutputStream sout = socket.getOutputStream();
 
 
-            DataInputStream in = new DataInputStream(sin);
+            ObjectInputStream in = new ObjectInputStream(sin);
             DataOutputStream out = new DataOutputStream(sout);
+            java.util.List<String> list = new ArrayList<String>((Collection<? extends String>) in.readObject());
 
-            desktopClient.showTextField(out, in);
+           // desktopClient.showTextField(out, in);
             System.out.println("Type in something and press enter. Will send it to the server and tell ya what it thinks.");
             System.out.println();
         } catch (SocketException x) {
