@@ -14,11 +14,10 @@ public class DesktopClient {
     private JLabel headerLabel;
     private JLabel statusLabel;
     private JPanel controlPanel;
-    int serverPort;
-    String address;
+    private final static int PORT=6666;
+    private final static String address="127.0.0.1";
 
-    public DesktopClient(int serverPort, String address) {
-        this.serverPort=serverPort;
+    public DesktopClient() {
         prepareGUI();
     }
 
@@ -79,12 +78,12 @@ public class DesktopClient {
     }
 
     public static void main(String args[]) {
-        DesktopClient desktopClient = new DesktopClient(6666,"127.0.0.1");
+        DesktopClient desktopClient = new DesktopClient();
 
         try {
-            InetAddress ipAddress = InetAddress.getByName(desktopClient.address);
-            System.out.println("Any of you heard of a socket with IP address " + desktopClient.address + " and port " + desktopClient.serverPort + "?");
-            Socket socket = new Socket(ipAddress, desktopClient.serverPort);
+            InetAddress ipAddress = InetAddress.getByName(address);
+            System.out.println("Any of you heard of a socket with IP address " + address + " and port " + PORT + "?");
+            Socket socket = new Socket(ipAddress, PORT);
             System.out.println("Yes! I just got hold of the program.");
 
 
