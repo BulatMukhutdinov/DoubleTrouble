@@ -7,6 +7,7 @@ public class App {
     public static void main(String args[]) {
         App app = new App();
         app.initDatabases();
+        //test JSP
         Server server = new Server();
         server.start(PORT, databases);
         //TODO Сервер нужен только web решения. Консольное приложение пишет сразу в базу.
