@@ -8,7 +8,8 @@ import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.SocketException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DesktopClient {
     private JFrame mainFrame;
@@ -45,24 +46,23 @@ public class DesktopClient {
         mainFrame.setVisible(true);
     }
 
-    private void showTextField(final DataOutputStream out, final DataInputStream in) {
+    private void showTextField(final DataOutputStream out, final InputStream in) {
         headerLabel.setText("Enter your text here");
 
         final JTextField userText = new JTextField(15);
         JButton sendButton = new JButton("Send");
         sendButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String data = "User entered: " + userText.getText();
-                statusLabel.setText(data);
+
                 System.out.println("Sending this line to the server...");
                 try {
-                    out.writeUTF(userText.getText());
+                    out.writeUTF("getrecords");
                     out.flush();
-                    boolean isTransactionSucceed = in.readBoolean();
-                    if (isTransactionSucceed) {
-                        statusLabel.setText("Success!");
-                    } else {
-                        statusLabel.setText("Failed");
+                    ObjectInputStream sin = new ObjectInputStream(in);
+                    Map<String,String> map = new HashMap<String, String>((Map<? extends String, ? extends String>) sin.readObject());
+
+                    for(Map.Entry<String, String> entry : map.entrySet()){
+                        statusLabel.setText(statusLabel.getText() + "\n" +entry.getKey() + " " + entry.getValue());
                     }
                     System.out.println();
                 } catch (SocketException x) {
@@ -87,16 +87,13 @@ public class DesktopClient {
             Socket socket = new Socket(ipAddress, PORT);
             System.out.println("Yes! I just got hold of the program.");
 
-
             InputStream sin = socket.getInputStream();
             OutputStream sout = socket.getOutputStream();
 
 
-            ObjectInputStream in = new ObjectInputStream(sin);
             DataOutputStream out = new DataOutputStream(sout);
-            java.util.List<String> list = new ArrayList<String>((Collection<? extends String>) in.readObject());
 
-           // desktopClient.showTextField(out, in);
+            desktopClient.showTextField(out, sin);
             System.out.println("Type in something and press enter. Will send it to the server and tell ya what it thinks.");
             System.out.println();
         } catch (SocketException x) {
