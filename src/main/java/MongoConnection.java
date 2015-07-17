@@ -182,6 +182,8 @@ public class MongoConnection implements Recordable {
         return "";
     }
 
+
+    // What is this?
     private boolean testConnection() {
         try {
             Class.forName("mongo-java-driver-2.13.2");
