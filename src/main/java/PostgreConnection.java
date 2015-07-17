@@ -32,7 +32,7 @@ public class PostgreConnection implements Recordable {
         }
     }
 
-    @Override
+    //@Override
     public boolean setRecord(String record) {
         if (record == null || record.length() == 0) {
             System.out.println("Incorrect record!");
@@ -50,7 +50,7 @@ public class PostgreConnection implements Recordable {
         return true;
     }
 
-    @Override
+    //@Override
     public Map<String, String> searchRecords(String searchWord) {
 
         Statement statement = null;
@@ -69,7 +69,7 @@ public class PostgreConnection implements Recordable {
         }
     }
 
-    @Override
+    //@Override
     public String getRecord(int id) {
         Statement statement;
         try {
@@ -84,7 +84,7 @@ public class PostgreConnection implements Recordable {
         }
     }
 
-    @Override
+    //@Override
     public Map<String, String> getRecords() {
         Statement statement;
         try {
@@ -102,7 +102,7 @@ public class PostgreConnection implements Recordable {
         }
     }
 
-    @Override
+    //@Override
     public boolean deleteRecord(int id) {
         Statement statement;
         try {
@@ -116,7 +116,7 @@ public class PostgreConnection implements Recordable {
         }
     }
 
-    @Override
+    //@Override
     public boolean isConnectionSuccessful() {
         return isConnectionSuccessful;
     }

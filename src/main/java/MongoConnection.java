@@ -4,9 +4,15 @@
 //import java.sql.*;
 //import java.sql.DriverManager;
 //import java.util.*;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.net.UnknownHostException;
+import java.util.Map;
+
 import com.mongodb.*;
 
 public class MongoConnection implements Recordable {
@@ -61,7 +67,7 @@ public class MongoConnection implements Recordable {
 
         DBCollection ids1 = db.getCollection("ids1");
 
-        BasicDBObject findQuery = new BasicDBObject("buf", new BasicDBObject("$eq", "buf"));
+        BasicDBObject findQuery = new BasicDBObject("buf", new BasicDBObject("==", "buf"));
 
         /*DBCursor cur = ids1.find();
         while(cur.hasNext()) {
@@ -127,31 +133,31 @@ public class MongoConnection implements Recordable {
 
 
     //@Override
-    public List<String> searchRecords(String searchWord) {
-     /*   if (testConnection()) {
-          //  throw new DBException();
-        }
-        Statement statement = null;
+    public Map<String, String> searchRecords(String searchWord) {
         try {
-            statement = connection.createStatement();
-            String sql = "select record from records where id=" + id;
-            ResultSet resultSet = statement.executeQuery(sql);
-            resultSet.next();
-            return resultSet.getString("record");
-        } catch (SQLException e) {
+            BasicDBObject findQuery = new BasicDBObject("record", new BasicDBObject("%regex", searchWord));
+            DBCursor docs = rec.find(findQuery);//.sort(orderBy);
+            Map<String, String> records = new HashMap<String, String>();
+            while (docs.hasNext()) {
+                DBObject doc = docs.next();
+                System.out.println(
+                        "Gotcha! Record[" + doc.get("id") + " = " + doc.get("record")
+                );
+                records.put(doc.get("id").toString(), doc.get("record").toString());
+            }
+            return records;
+        }
+        catch (MongoException e) {
             e.printStackTrace();
-        }*/
-        return new ArrayList<String>();
+            return null;
+        }
     }
 
     //@Override
-    public String getRecord(int Gottenid) throws DBException {
-        if (!testConnection()) {
-            throw new DBException();
-        }
+    public String getRecord(int Gottenid) {
         try {
 
-            BasicDBObject findQuery = new BasicDBObject("id", new BasicDBObject("$eq", Gottenid));
+            BasicDBObject findQuery = new BasicDBObject("id", new BasicDBObject("==", Gottenid));
 
         /*DBCursor cur = ids1.find();
         while(cur.hasNext()) {
@@ -173,7 +179,7 @@ public class MongoConnection implements Recordable {
                 System.out.println(
                         "Gotcha! Record =  " + doc.get("record")
                 );
-                return doc.get("lastid").toString();
+                return doc.get("record").toString();
             }
             }
             catch (MongoException e) {
@@ -182,6 +188,51 @@ public class MongoConnection implements Recordable {
         return "";
     }
 
+    //@Override
+    public Map<String, String> getRecords() {
+        try {
+            BasicDBObject findQuery = new BasicDBObject();
+            BasicDBObject orderBy = new BasicDBObject("id", 1);
+            DBCursor docs = rec.find(findQuery).sort(orderBy);
+            Map<String, String> records = new HashMap<String, String>();
+            while (docs.hasNext()) {
+                DBObject doc = docs.next();
+                System.out.println(
+                        "Gotcha! Record[" + doc.get("id") + " = " + doc.get("record")
+                );
+                records.put(doc.get("id").toString(), doc.get("record").toString());
+            }
+            return records;
+        }
+        catch (MongoException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    //@Override
+    public boolean deleteRecord(int Gottenid) {
+        try {
+
+            BasicDBObject findQuery = new BasicDBObject("id", new BasicDBObject("==", Gottenid));
+
+            DBCursor docs = rec.find(findQuery);
+
+            while(docs.hasNext()) {
+                DBObject doc = docs.next();
+                System.out.println(
+                        "Gotcha! We deleting record =  " + doc.get("record")
+                );
+                doc.get("record").toString();
+                rec.remove(doc);
+            }
+            return true;
+        }
+        catch (MongoException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
     // What is this?
     private boolean testConnection() {
