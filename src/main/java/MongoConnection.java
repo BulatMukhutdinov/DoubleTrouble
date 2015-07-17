@@ -54,12 +54,6 @@ public class MongoConnection implements Recordable {
     private static int getLastId() throws UnknownHostException{
         // GETTING THE NEXT ID NUMBER FROM ANOTHER DOCUMENT
         int id=0;
-        /*BasicDBObject ids = new BasicDBObject();
-        ids.put("buf", "buf");
-        ids.put("lastid", id);
-        final BasicDBObject[] seedData1 = {ids};*/
-
-        // Standard URI format: mongodb://[dbuser:dbpassword@]host:port/dbname
 
         MongoClientURI uri1  = new MongoClientURI("mongodb://DT:DoubleTrouble@ds055842.mongolab.com:55842/doubletrouble");
         MongoClient client1 = new MongoClient(uri1);
@@ -67,22 +61,9 @@ public class MongoConnection implements Recordable {
 
         DBCollection ids1 = db.getCollection("ids1");
 
-        BasicDBObject findQuery = new BasicDBObject("buf", new BasicDBObject("==", "buf"));
+        BasicDBObject findQuery = new BasicDBObject("buf", new BasicDBObject("$eq", "buf"));
 
-        /*DBCursor cur = ids1.find();
-        while(cur.hasNext()) {
-            System.out.println(cur.next());
-        }
-        BasicDBObject query1 = new BasicDBObject();
-        query1.put("i", 71);
-        DBCursor cur = ids1.find(query1);
-        while(cur.hasNext()) {
-            System.out.println(cur.next());
-        }*/
-
-        //BasicDBObject orderBy = new BasicDBObject("decade", 1);
-
-        DBCursor docs = ids1.find(findQuery);//.sort(orderBy);
+        DBCursor docs = ids1.find(findQuery);
 
         while(docs.hasNext()){
             DBObject doc = docs.next();
@@ -157,7 +138,7 @@ public class MongoConnection implements Recordable {
     public String getRecord(int Gottenid) {
         try {
 
-            BasicDBObject findQuery = new BasicDBObject("id", new BasicDBObject("==", Gottenid));
+            BasicDBObject findQuery = new BasicDBObject("id", new BasicDBObject("$eq", Gottenid));
 
         /*DBCursor cur = ids1.find();
         while(cur.hasNext()) {
@@ -214,7 +195,7 @@ public class MongoConnection implements Recordable {
     public boolean deleteRecord(int Gottenid) {
         try {
 
-            BasicDBObject findQuery = new BasicDBObject("id", new BasicDBObject("==", Gottenid));
+            BasicDBObject findQuery = new BasicDBObject("id", new BasicDBObject("$eq", Gottenid));
 
             DBCursor docs = rec.find(findQuery);
 
