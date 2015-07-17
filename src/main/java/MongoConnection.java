@@ -65,6 +65,7 @@ public class MongoConnection implements Recordable {
 
         DBCursor docs = ids1.find(findQuery);
 
+        // почему функция возвращает id=0 ?
         while(docs.hasNext()){
             DBObject doc = docs.next();
             System.out.println(
