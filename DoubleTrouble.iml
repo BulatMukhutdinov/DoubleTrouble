@@ -11,7 +11,8 @@
     </content>
     <orderEntry type="jdk" jdkName="1.7" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module-library" exported="">
+    <orderEntry type="library" exported="" name="mongo-java-driver-2.13.2" level="project" />
+    <orderEntry type="module-library">
       <library name="Maven: com.amazonaws.s3:RedshiftJDBC:4-1.1.6.1006">
         <CLASSES>
           <root url="jar://$MODULE_DIR$/lib/RedshiftJDBC4-1.1.6.1006.jar!/" />
@@ -20,6 +21,14 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" exported="" name="mongo-java-driver-2.13.2" level="project" />
+    <orderEntry type="module-library">
+      <library name="Maven: com.mongodb:mongo-java-driver:2.13.2">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/mongo-java-driver-2.13.2.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>

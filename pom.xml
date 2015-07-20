@@ -15,6 +15,13 @@
             <scope>system</scope>
             <systemPath>${basedir}/lib/RedshiftJDBC4-1.1.6.1006.jar</systemPath>
         </dependency>
+        <dependency>
+            <groupId>com.mongodb</groupId>
+            <artifactId>mongo-java-driver</artifactId>
+            <version>2.13.2</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/mongo-java-driver-2.13.2.jar</systemPath>
+        </dependency>
     </dependencies>
 
 </project>
