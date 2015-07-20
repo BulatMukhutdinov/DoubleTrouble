@@ -66,7 +66,13 @@ public class SocketThread extends Thread {
                 out.flush();
             } else if (params.get(0).toLowerCase().equals("getrecord")) {
                 DataOutputStream out = new DataOutputStream(outputStream);
-                int id = Integer.getInteger(params.get(1));
+                int id;
+                try {
+                    id = Integer.getInteger(params.get(1));
+                } catch (NullPointerException e) {
+                    e.printStackTrace();
+                    return;
+                }
                 out.writeUTF(databases.get(0).getRecord(id));
                 out.flush();
             } else if (params.get(0).toLowerCase().equals("deleterecord")) {
