@@ -59,7 +59,7 @@ public class MongoConnection implements Recordable {
         MongoClient client1 = new MongoClient(uri1);
         DB db = client1.getDB(uri1.getDatabase());
 
-        DBCollection ids1 = db.getCollection("ids1");
+        DBCollection ids1 = db.getCollection("ids");
 
         BasicDBObject findQuery = new BasicDBObject("buf", new BasicDBObject("$eq", "buf"));
 
@@ -76,6 +76,8 @@ public class MongoConnection implements Recordable {
 
         client1.close();
         // END
+
+        id++;
 
         return id;
     }
@@ -97,9 +99,6 @@ public class MongoConnection implements Recordable {
     public boolean setRecord(String record){
         if (record == null || record.length() == 0) {
             System.out.println("Incorrect record!");
-            return false;
-        }
-        if (!testConnection()) {
             return false;
         }
         try {
@@ -214,18 +213,6 @@ public class MongoConnection implements Recordable {
             e.printStackTrace();
             return false;
         }
-    }
-
-    // What is this?
-    private boolean testConnection() {
-        try {
-            Class.forName("mongo-java-driver-2.13.2");
-        } catch (ClassNotFoundException e) {
-            System.out.println("Where is your MongoDB Driver? Include in your library path!");
-            e.printStackTrace();
-            return false;
-        }
-        return true;
     }
 
     //@Override
