@@ -180,7 +180,7 @@ public class MongoConnection implements Recordable {
             while (docs.hasNext()) {
                 DBObject doc = docs.next();
                 System.out.println(
-                        "Gotcha! Record[" + doc.get("id") + " = " + doc.get("record")
+                        "Gotcha! Record[" + doc.get("id") + "] = " + doc.get("record")
                 );
                 records.put(doc.get("id").toString(), doc.get("record").toString());
             }
