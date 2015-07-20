@@ -29,11 +29,13 @@ public class SocketThread extends Thread {
                 System.out.println("Message from client: \"" + line + "\"");
                 //TODO парсинг строки, вызов нужного метода
                 sendAnswer(line, outputStream);
-                System.out.println("Waiting for the next record...");
+
             }
         } catch (SocketException x) {
             System.out.println("Client " + getName() + " closed");
             System.out.println();
+        } catch (EOFException x) {
+            System.out.println("Waiting for the next record...");
         } catch (Exception x) {
             x.printStackTrace();
         }
@@ -52,7 +54,7 @@ public class SocketThread extends Thread {
                 boolean isTransactionSucceed = true;
                 String record = "";
                 for (int i = 1; i < params.size(); i++) {
-                    record += params.get(i);
+                    record += params.get(i) + " ";
                 }
                 for (Recordable recordable : databases) {
                     if (!recordable.setRecord(record)) {
