@@ -65,7 +65,6 @@ public class MongoConnection implements Recordable {
 
         DBCursor docs = ids1.find(findQuery);
 
-        // почему функция возвращает id=0 ?
         while(docs.hasNext()){
             DBObject doc = docs.next();
             System.out.println(
@@ -74,10 +73,12 @@ public class MongoConnection implements Recordable {
             id = Integer.parseInt(doc.get("lastid").toString());
         }
 
-        client1.close();
-        // END
-
         id++;
+
+        BasicDBObject updateQuery = new BasicDBObject("buf", "buf");
+        ids1.update(updateQuery, new BasicDBObject("$set", new BasicDBObject("lastid", id)));
+
+        client1.close();
 
         return id;
     }
@@ -122,7 +123,7 @@ public class MongoConnection implements Recordable {
             while (docs.hasNext()) {
                 DBObject doc = docs.next();
                 System.out.println(
-                        "Gotcha! Record[" + doc.get("id") + " = " + doc.get("record")
+                        "Gotcha! Record[" + doc.get("id") + "] = " + doc.get("record")
                 );
                 records.put(doc.get("id").toString(), doc.get("record").toString());
             }
