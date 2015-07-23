@@ -76,8 +76,11 @@ public class PostgreConnection implements Recordable {
             statement = connection.createStatement();
             String sql = "select record from records where id=" + id;
             ResultSet resultSet = statement.executeQuery(sql);
-            resultSet.next();
-            return resultSet.getString("record");
+            while (resultSet.next()) {
+                return resultSet.getString("record");
+            }
+            return "";
+
         } catch (SQLException e) {
             e.printStackTrace();
             return null;

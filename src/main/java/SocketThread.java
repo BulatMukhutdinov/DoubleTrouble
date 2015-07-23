@@ -66,19 +66,13 @@ public class SocketThread extends Thread {
                 out.flush();
             } else if (params.get(0).toLowerCase().equals("getrecord")) {
                 DataOutputStream out = new DataOutputStream(outputStream);
-                int id;
-                try {
-                    id = Integer.getInteger(params.get(1));
-                } catch (NullPointerException e) {
-                    e.printStackTrace();
-                    return;
-                }
+                int id = Integer.valueOf(params.get(1));
                 out.writeUTF(databases.get(0).getRecord(id));
                 out.flush();
             } else if (params.get(0).toLowerCase().equals("deleterecord")) {
                 DataOutputStream out = new DataOutputStream(outputStream);
                 boolean isTransactionSucceed = true;
-                int id = Integer.getInteger(params.get(1));
+                int id = Integer.valueOf(params.get(1));
                 for (Recordable recordable : databases) {
                     if (!recordable.deleteRecord(id)) {
                         isTransactionSucceed = false;
