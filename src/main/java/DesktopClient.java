@@ -1,5 +1,3 @@
-import com.sun.deploy.panel.JreTableModel;
-
 import javax.swing.*;
 import javax.swing.table.*;
 import java.awt.*;
@@ -21,10 +19,13 @@ public class DesktopClient {
     private JPanel controlPanel;
     private JPanel tablePanel;
     private JTable Table;
+    private JScrollPane ScrollPane;
     private String[] column = {"ID", "Message"};
     private DefaultTableModel model;
     private final static int PORT = 6666;
     private final static String address = "52.28.195.240";
+    //private final static String address = "127.0.0.1";
+
     public DesktopClient() {
         prepareGUI();
     }
@@ -33,7 +34,7 @@ public class DesktopClient {
         mainFrame = new JFrame("Double Trouble");
         mainFrame.setSize(900, 700);
         mainFrame.getContentPane().setBackground(Color.WHITE);
-        mainFrame.setLayout(null);
+        mainFrame.setLayout(new GridLayout(4, 0));
         mainFrame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent windowEvent) {
                 System.exit(0);
@@ -62,21 +63,21 @@ public class DesktopClient {
         controlPanel.setLayout(new FlowLayout());
         controlPanel.setBackground(Color.WHITE);
 
-        controlPanel.setBounds(20, 120, 800, 100);
+        controlPanel.setBounds(20, 120, 400, 50);
 
         tablePanel = new JPanel();
 
-        tablePanel.setLayout(new FlowLayout());
+        tablePanel.setLayout(new GridLayout(1, 0));
         tablePanel.setBackground(Color.WHITE);
 
-        tablePanel.setBounds(100, 250, 600, 300);
         model = new DefaultTableModel(column, 0);
         Table = new JTable(model);
         Table.setModel(model);
         Table.setFont(new Font("Arial", Font.ITALIC, 18));
-        Table.setBounds(100, 250, 500, 200);
         Table.setColumnSelectionAllowed(false);//выбор столбца
         Table.setRowSelectionAllowed(false);//откл строк
+
+        controlPanel.add(Table);
         mainFrame.add(headerLabel);
         mainFrame.add(controlPanel);
         mainFrame.add(tablePanel);
@@ -254,8 +255,10 @@ public class DesktopClient {
         controlPanel.add(getIDButton);
         controlPanel.add(getWordButton);
         controlPanel.add(deleteButton);
-        tablePanel.add(Table);
-        tablePanel.setPreferredSize(new Dimension(450, 200));
+        ScrollPane = new JScrollPane(Table);
+        Table.setFillsViewportHeight(true);
+        tablePanel.add(ScrollPane, BorderLayout.NORTH);
+        mainFrame.repaint();
         mainFrame.setVisible(true);
     }
 
